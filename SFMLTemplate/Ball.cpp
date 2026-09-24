@@ -22,10 +22,7 @@ namespace Arkanoid
     {
         shape.setPosition(startX, startY);
 
-        velocity = sf::Vector2f(
-            BALL_SPEED * 0.7f,
-            -BALL_SPEED
-        );
+        velocity = sf::Vector2f(BALL_SPEED * 0.7f, -BALL_SPEED);
 
         float length = std::sqrt(
             velocity.x * velocity.x +

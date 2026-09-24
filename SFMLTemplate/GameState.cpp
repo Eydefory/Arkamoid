@@ -12,7 +12,7 @@ namespace Arkanoid
         gameOver(false),
         win(false)
     {
-        CreateBricks();
+        CreateBlocks();
     }
 
     void GameState::Reset()
@@ -25,23 +25,21 @@ namespace Arkanoid
         platform.Reset();
         ball.Reset();
 
-        CreateBricks();
+        CreateBlocks();
     }
 
-    void GameState::CreateBricks()
+    void GameState::CreateBlocks()
     {
-        bricks.clear();
+        blocks.clear();
 
-        for (int row = 0; row < BRICK_ROWS; ++row)
+        for (int row = 0; row < BLOCK_ROWS; ++row)
         {
-            for (int column = 0; column < BRICK_COLUMNS; ++column)
+            for (int column = 0; column < BLOCK_COLUMNS; ++column)
             {
-                float x = BRICKS_START_X + column * (BRICK_WIDTH + BRICK_GAP);
-                float y = BRICKS_START_Y + row * (BRICK_HEIGHT + BRICK_GAP);
+                float x = BLOCK_START_X + column * (BLOCK_WIDTH + BLOCK_GAP);
+                float y = BLOCK_START_Y + row * (BLOCK_HEIGHT + BLOCK_GAP);
 
-                bricks.push_back(
-                    std::make_unique<Brick>(x, y)
-                );
+                blocks.push_back(std::make_unique<Block>(x, y));
             }
         }
     }
@@ -55,8 +53,7 @@ namespace Arkanoid
         ball.Update(deltaTime);
 
         ball.CheckPlatformCollision(platform.GetBounds());
-
-        CheckBrickCollisions();
+        CheckBlockCollisions();
 
         if (ball.IsOutOfScreen())
         {
@@ -69,7 +66,7 @@ namespace Arkanoid
             }
         }
 
-        if (AllBricksDestroyed())
+        if (AllBlocksDestroyed())
             win = true;
     }
 
@@ -81,27 +78,27 @@ namespace Arkanoid
         platform.MoveToMouse(mouseX);
     }
 
-    void GameState::CheckBrickCollisions()
+    void GameState::CheckBlockCollisions()
     {
-        for (const auto& brick : bricks)
+        for (const auto& block : blocks)
         {
-            if (brick->IsDestroyed())
+            if (block->IsDestroyed())
                 continue;
 
-            if (!brick->CheckCollision(ball.GetBounds()))
+            if (!block->CheckCollision(ball.GetBounds()))
                 continue;
 
-            sf::FloatRect brickBounds = brick->GetBounds();
+            sf::FloatRect blockBounds = block->GetBounds();
             sf::FloatRect ballBounds = ball.GetBounds();
 
             float ballCenterX = ballBounds.left + ballBounds.width / 2.f;
             float ballCenterY = ballBounds.top + ballBounds.height / 2.f;
 
-            float brickCenterX = brickBounds.left + brickBounds.width / 2.f;
-            float brickCenterY = brickBounds.top + brickBounds.height / 2.f;
+            float blockCenterX = blockBounds.left + blockBounds.width / 2.f;
+            float blockCenterY = blockBounds.top + blockBounds.height / 2.f;
 
-            float differenceX = ballCenterX - brickCenterX;
-            float differenceY = ballCenterY - brickCenterY;
+            float differenceX = ballCenterX - blockCenterX;
+            float differenceY = ballCenterY - blockCenterY;
 
             if (std::abs(differenceX) > std::abs(differenceY))
                 ball.BounceHorizontal();
@@ -109,16 +106,15 @@ namespace Arkanoid
                 ball.BounceVertical();
 
             score += 10;
-
             break;
         }
     }
 
-    bool GameState::AllBricksDestroyed() const
+    bool GameState::AllBlocksDestroyed() const
     {
-        for (const auto& brick : bricks)
+        for (const auto& block : blocks)
         {
-            if (!brick->IsDestroyed())
+            if (!block->IsDestroyed())
                 return false;
         }
 
@@ -138,8 +134,8 @@ namespace Arkanoid
 
     void GameState::Draw(sf::RenderWindow& window) const
     {
-        for (const auto& brick : bricks)
-            brick->Draw(window);
+        for (const auto& block : blocks)
+            block->Draw(window);
 
         platform.Draw(window);
         ball.Draw(window);

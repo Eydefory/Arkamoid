@@ -10,12 +10,6 @@
     <ClCompile Include="GameMain.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Math.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="PLatform.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -28,15 +22,12 @@
     <ClCompile Include="Game.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="Math.h">
-      <Filter>Sources</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="Platform.h">
@@ -49,6 +40,12 @@
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>

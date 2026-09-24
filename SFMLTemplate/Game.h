@@ -14,18 +14,31 @@ namespace Arkanoid
         void Run();
 
     private:
+        enum class GameScreen
+        {
+            Menu,
+            Playing,
+            Win,
+            GameOver
+        };
+
         sf::RenderWindow window;
         GameState gameState;
         sf::Font font;
+
+        GameScreen currentScreen;
 
         void HandleEvents();
         void Update(float deltaTime);
         void Draw();
 
+        void DrawMenu();
+        void DrawGame();
         void DrawInterface();
-        void DrawGameOver();
         void DrawWin();
+        void DrawGameOver();
 
-        void Restart();
+        void StartGame();
+        void RestartGame();
     };
 }

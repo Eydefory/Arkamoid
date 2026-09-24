@@ -12,15 +12,15 @@ namespace Arkanoid
     constexpr float BALL_RADIUS = 9.f;
     constexpr float BALL_SPEED = 350.f;
 
-    constexpr int BRICK_ROWS = 5;
-    constexpr int BRICK_COLUMNS = 10;
+    constexpr int BLOCK_ROWS = 5;
+    constexpr int BLOCK_COLUMNS = 10;
 
-    constexpr float BRICK_WIDTH = 68.f;
-    constexpr float BRICK_HEIGHT = 25.f;
-    constexpr float BRICK_GAP = 5.f;
+    constexpr float BLOCK_WIDTH = 68.f;
+    constexpr float BLOCK_HEIGHT = 25.f;
+    constexpr float BLOCK_GAP = 5.f;
 
-    constexpr float BRICKS_START_X = 35.f;
-    constexpr float BRICKS_START_Y = 70.f;
+    constexpr float BLOCK_START_X = 35.f;
+    constexpr float BLOCK_START_Y = 70.f;
 
     constexpr int START_LIVES = 3;
 }

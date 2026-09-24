@@ -7,7 +7,7 @@
 
 #include "Platform.h"
 #include "Ball.h"
-#include "Brick.h"
+#include "Block.h"
 
 namespace Arkanoid
 {
@@ -31,7 +31,7 @@ namespace Arkanoid
     private:
         Platform platform;
         Ball ball;
-        std::vector<std::unique_ptr<Brick>> bricks;
+        std::vector<std::unique_ptr<Block>> blocks;
 
         int score;
         int lives;
@@ -39,10 +39,9 @@ namespace Arkanoid
         bool gameOver;
         bool win;
 
-        void CreateBricks();
-        void CheckBrickCollisions();
-        bool AllBricksDestroyed() const;
-
+        void CreateBlocks();
+        void CheckBlockCollisions();
+        bool AllBlocksDestroyed() const;
         void LoseLife();
     };
 }
