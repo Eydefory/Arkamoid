@@ -67,6 +67,7 @@ namespace Arkanoid
         velocity.x = -velocity.x;
     }
 
+
     void Ball::BounceVertical()
     {
         velocity.y = -velocity.y;

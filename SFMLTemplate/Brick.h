@@ -6,21 +6,21 @@
 
 namespace Arkanoid
 {
-    class Block : public GameObject
+    class Brick : public GameObject
     {
     public:
-        Block(float x, float y);
+        Brick(float x, float y);
 
         void Update(float deltaTime) override;
         void Draw(sf::RenderWindow& window) const override;
-
         sf::FloatRect GetBounds() const override;
 
-        bool IsDestroyed() const;
-        bool CheckCollision(const sf::FloatRect& ballBounds);
+        virtual bool CheckCollision(const sf::FloatRect& ballBounds);
 
-    private:
-        sf::RectangleShape shape;
+        bool IsDestroyed() const;
+
+    protected:
+        sf::RectangleShape brickShape;
         bool destroyed;
     };
 }

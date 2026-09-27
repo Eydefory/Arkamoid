@@ -41,7 +41,11 @@ namespace Arkanoid
 
     void Platform::MoveToMouse(float mouseX)
     {
-        shape.setPosition(mouseX - PLATFORM_WIDTH / 2.f, shape.getPosition().y);
+        shape.setPosition(
+            mouseX - PLATFORM_WIDTH / 2.f,
+            shape.getPosition().y
+        );
+
         ClampToScreen();
     }
 

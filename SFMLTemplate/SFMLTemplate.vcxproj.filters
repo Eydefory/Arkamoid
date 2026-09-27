@@ -22,7 +22,10 @@
     <ClCompile Include="Game.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Block.cpp">
+    <ClCompile Include="Brick.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DurableBrick.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -45,7 +48,10 @@
     <ClInclude Include="GameObject.h">
       <Filter>Sources</Filter>
     </ClInclude>
-    <ClInclude Include="Block.h">
+    <ClInclude Include="Brick.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="DurableBrick.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>

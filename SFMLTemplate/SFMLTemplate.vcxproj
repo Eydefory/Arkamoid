@@ -159,7 +159,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
-    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="DurableBrick.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -167,8 +168,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
-    <ClInclude Include="Block.h" />
+    <ClInclude Include="Brick.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="DurableBrick.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
