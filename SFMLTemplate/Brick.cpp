@@ -35,8 +35,13 @@ namespace Arkanoid
         if (!ballBounds.intersects(brickShape.getGlobalBounds()))
             return false;
 
-        destroyed = true;
+        OnHit();
         return true;
+    }
+
+    void Brick::OnHit()
+    {
+        destroyed = true;
     }
 
     bool Brick::IsDestroyed() const

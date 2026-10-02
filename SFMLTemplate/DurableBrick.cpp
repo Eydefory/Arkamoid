@@ -16,14 +16,8 @@ namespace Arkanoid
         brickShape.setFillColor(damageColors[0]);
     }
 
-    bool DurableBrick::CheckCollision(const sf::FloatRect& ballBounds)
+    void DurableBrick::OnHit()
     {
-        if (destroyed)
-            return false;
-
-        if (!ballBounds.intersects(brickShape.getGlobalBounds()))
-            return false;
-
         --hitPoints;
 
         if (hitPoints <= 0)
@@ -34,16 +28,17 @@ namespace Arkanoid
         {
             UpdateColor();
         }
-
-        return true;
     }
 
     void DurableBrick::UpdateColor()
     {
         int colorIndex = 3 - hitPoints;
 
-        if (colorIndex >= 0 && colorIndex < static_cast<int>(damageColors.size()))
+        if (colorIndex >= 0 &&
+            colorIndex < static_cast<int>(damageColors.size()))
+        {
             brickShape.setFillColor(damageColors[colorIndex]);
+        }
     }
 
     void DurableBrick::Draw(sf::RenderWindow& window) const

@@ -11,8 +11,10 @@ namespace Arkanoid
     public:
         DurableBrick(float x, float y);
 
-        bool CheckCollision(const sf::FloatRect& ballBounds) override;
         void Draw(sf::RenderWindow& window) const override;
+
+    protected:
+        void OnHit() override;
 
     private:
         int hitPoints;

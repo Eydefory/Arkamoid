@@ -93,22 +93,26 @@ namespace Arkanoid
             if (brick->IsDestroyed())
                 continue;
 
-            if (!brick->CheckCollision(ball.GetBounds()))
+            sf::FloatRect ballBounds = ball.GetBounds();
+            sf::FloatRect brickBounds = brick->GetBounds();
+
+            if (!brick->CheckCollision(ballBounds))
                 continue;
 
-            sf::FloatRect brickBounds = brick->GetBounds();
-            sf::FloatRect ballBounds = ball.GetBounds();
+            float ballLeft = ballBounds.left;
+            float ballRight = ballBounds.left + ballBounds.width;
+            float ballTop = ballBounds.top;
+            float ballBottom = ballBounds.top + ballBounds.height;
 
-            float ballCenterX = ballBounds.left + ballBounds.width / 2.f;
-            float ballCenterY = ballBounds.top + ballBounds.height / 2.f;
+            float brickLeft = brickBounds.left;
+            float brickRight = brickBounds.left + brickBounds.width;
+            float brickTop = brickBounds.top;
+            float brickBottom = brickBounds.top + brickBounds.height;
 
-            float brickCenterX = brickBounds.left + brickBounds.width / 2.f;
-            float brickCenterY = brickBounds.top + brickBounds.height / 2.f;
+            float overlapX = std::min(ballRight, brickRight) - std::max(ballLeft, brickLeft);
+            float overlapY = std::min(ballBottom, brickBottom) - std::max(ballTop, brickTop);
 
-            float differenceX = ballCenterX - brickCenterX;
-            float differenceY = ballCenterY - brickCenterY;
-
-            if (std::abs(differenceX) > std::abs(differenceY))
+            if (overlapX < overlapY)
                 ball.BounceHorizontal();
             else
                 ball.BounceVertical();

@@ -15,11 +15,13 @@ namespace Arkanoid
         void Draw(sf::RenderWindow& window) const override;
         sf::FloatRect GetBounds() const override;
 
-        virtual bool CheckCollision(const sf::FloatRect& ballBounds);
+        bool CheckCollision(const sf::FloatRect& ballBounds);
 
         bool IsDestroyed() const;
 
     protected:
+        virtual void OnHit();
+
         sf::RectangleShape brickShape;
         bool destroyed;
     };
