@@ -22,6 +22,10 @@ namespace Arkanoid
         sf::Vector2f GetPosition() const;
         sf::FloatRect GetBounds() const;
 
+        void SetPosition(const sf::Vector2f& position);
+        void SetSpeedMultiplier(float multiplier);
+        void ResetSpeed();
+
     private:
         sf::CircleShape shape;
         sf::Vector2f velocity;

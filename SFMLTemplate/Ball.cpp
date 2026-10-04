@@ -20,6 +20,7 @@ namespace Arkanoid
 
     void Ball::Reset()
     {
+        speed = BALL_SPEED;
         shape.setPosition(startX, startY);
 
         velocity = sf::Vector2f(BALL_SPEED * 0.7f, -BALL_SPEED);
@@ -29,7 +30,8 @@ namespace Arkanoid
             velocity.y * velocity.y
         );
 
-        velocity *= speed / length;
+        if (length > 0.f)
+            velocity *= speed / length;
     }
 
     void Ball::Update(float deltaTime)
@@ -67,7 +69,6 @@ namespace Arkanoid
         velocity.x = -velocity.x;
     }
 
-
     void Ball::BounceVertical()
     {
         velocity.y = -velocity.y;
@@ -90,10 +91,15 @@ namespace Arkanoid
 
         BounceVertical();
 
-        float platformCenter = platformBounds.left + platformBounds.width / 2.f;
+        float platformCenter =
+            platformBounds.left + platformBounds.width / 2.f;
+
         float ballCenter = shape.getPosition().x;
+
         float difference = ballCenter - platformCenter;
-        float normalizedDifference = difference / (platformBounds.width / 2.f);
+
+        float normalizedDifference =
+            difference / (platformBounds.width / 2.f);
 
         velocity.x = normalizedDifference * speed;
 
@@ -121,5 +127,36 @@ namespace Arkanoid
     sf::FloatRect Ball::GetBounds() const
     {
         return shape.getGlobalBounds();
+    }
+
+    void Ball::SetPosition(const sf::Vector2f& position)
+    {
+        shape.setPosition(position);
+    }
+
+    void Ball::SetSpeedMultiplier(float multiplier)
+    {
+        float length = std::sqrt(
+            velocity.x * velocity.x +
+            velocity.y * velocity.y
+        );
+
+        speed = BALL_SPEED * multiplier;
+
+        if (length > 0.f)
+            velocity *= speed / length;
+    }
+
+    void Ball::ResetSpeed()
+    {
+        float length = std::sqrt(
+            velocity.x * velocity.x +
+            velocity.y * velocity.y
+        );
+
+        speed = BALL_SPEED;
+
+        if (length > 0.f)
+            velocity *= speed / length;
     }
 }

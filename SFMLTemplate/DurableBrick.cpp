@@ -1,7 +1,5 @@
 #include "DurableBrick.h"
 
-#include "Constants.h"
-
 namespace Arkanoid
 {
     DurableBrick::DurableBrick(float x, float y)
@@ -37,7 +35,9 @@ namespace Arkanoid
         if (colorIndex >= 0 &&
             colorIndex < static_cast<int>(damageColors.size()))
         {
-            brickShape.setFillColor(damageColors[colorIndex]);
+            brickShape.setFillColor(
+                damageColors[colorIndex]
+            );
         }
     }
 

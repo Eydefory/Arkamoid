@@ -23,4 +23,13 @@ namespace Arkanoid
     constexpr float BLOCK_START_Y = 70.f;
 
     constexpr int START_LIVES = 3;
+
+    constexpr float BONUS_SIZE = 22.f;
+    constexpr float BONUS_FALL_SPEED = 130.f;
+    constexpr float BONUS_DROP_CHANCE = 0.10f;
+    constexpr float BONUS_DURATION = 7.f;
+
+    constexpr float FIREBALL_SPEED_MULTIPLIER = 1.15f;
+    constexpr float SPEED_BONUS_MULTIPLIER = 1.45f;
+    constexpr float SHRINK_PLATFORM_WIDTH = 70.f;
 }

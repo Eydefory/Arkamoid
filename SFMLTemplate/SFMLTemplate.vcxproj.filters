@@ -28,6 +28,18 @@
     <ClCompile Include="DurableBrick.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="ScoreStrategy.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMemento.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="BonusCommand.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Bonus.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">
@@ -52,6 +64,18 @@
       <Filter>Sources</Filter>
     </ClInclude>
     <ClInclude Include="DurableBrick.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreStrategy.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMemento.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="BonusCommand.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Bonus.h">
       <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,8 +16,9 @@ namespace Arkanoid
         sf::FloatRect GetBounds() const override;
 
         bool CheckCollision(const sf::FloatRect& ballBounds);
-
         bool IsDestroyed() const;
+
+        void Destroy();
 
     protected:
         virtual void OnHit();

@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <vector>
+
 #include "GameState.h"
 
 namespace Arkanoid
@@ -28,6 +30,9 @@ namespace Arkanoid
 
         GameScreen currentScreen;
 
+        std::vector<int> records;
+        bool scoreRecorded;
+
         void HandleEvents();
         void Update(float deltaTime);
         void Draw();
@@ -37,6 +42,9 @@ namespace Arkanoid
         void DrawInterface();
         void DrawWin();
         void DrawGameOver();
+        void DrawRecords(float startY);
+
+        void AddRecord(int score);
 
         void StartGame();
         void RestartGame();
