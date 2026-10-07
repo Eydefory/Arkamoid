@@ -116,7 +116,15 @@ namespace Arkanoid
             if (lives > 0)
             {
                 ball.Reset();
+
                 platform.Reset();
+
+                if (shrinkTimer > 0.f)
+                {
+                    platform.SetTemporaryWidth(
+                        SHRINK_PLATFORM_WIDTH
+                    );
+                }
             }
         }
 
@@ -278,6 +286,9 @@ namespace Arkanoid
 
     void GameState::ApplyShrinkBonus()
     {
+        if (shrinkTimer > 0.f)
+            return;
+
         shrinkTimer = BONUS_DURATION;
 
         platform.SetTemporaryWidth(
@@ -366,12 +377,27 @@ namespace Arkanoid
     GameMemento GameState::Save() const
     {
         std::vector<bool> destroyedBricks;
+        std::vector<int> brickHitPoints;
 
         for (const auto& brick : bricks)
         {
             destroyedBricks.push_back(
                 brick->IsDestroyed()
             );
+
+            const DurableBrick* durableBrick =
+                dynamic_cast<const DurableBrick*>(brick.get());
+
+            if (durableBrick != nullptr)
+            {
+                brickHitPoints.push_back(
+                    durableBrick->GetHitPoints()
+                );
+            }
+            else
+            {
+                brickHitPoints.push_back(-1);
+            }
         }
 
         return GameMemento(
@@ -380,7 +406,11 @@ namespace Arkanoid
             ball.GetPosition(),
             platform.GetPositionX(),
             platform.GetWidth(),
-            destroyedBricks
+            fireballTimer,
+            shrinkTimer,
+            speedTimer,
+            destroyedBricks,
+            brickHitPoints
         );
     }
 
@@ -392,11 +422,10 @@ namespace Arkanoid
         gameOver = false;
         win = false;
 
-        fireballTimer = 0.f;
-        shrinkTimer = 0.f;
-        speedTimer = 0.f;
+        fireballTimer = memento.GetFireballTimer();
+        shrinkTimer = memento.GetShrinkTimer();
+        speedTimer = memento.GetSpeedTimer();
 
-        
         CreateBricks();
 
         ball.SetPosition(
@@ -413,16 +442,28 @@ namespace Arkanoid
             memento.GetPlatformX()
         );
 
-        ball.ResetSpeed();
-
         const std::vector<bool>& destroyedBricks =
             memento.GetDestroyedBricks();
+
+        const std::vector<int>& brickHitPoints =
+            memento.GetBrickHitPoints();
 
         for (std::size_t i = 0;
             i < bricks.size();
             ++i)
         {
-            if (i < destroyedBricks.size() &&
+            DurableBrick* durableBrick =
+                dynamic_cast<DurableBrick*>(bricks[i].get());
+
+            if (durableBrick != nullptr &&
+                i < brickHitPoints.size() &&
+                brickHitPoints[i] >= 0)
+            {
+                durableBrick->SetHitPoints(
+                    brickHitPoints[i]
+                );
+            }
+            else if (i < destroyedBricks.size() &&
                 destroyedBricks[i])
             {
                 bricks[i]->Destroy();
@@ -430,6 +471,23 @@ namespace Arkanoid
         }
 
         bonuses.clear();
+
+        if (speedTimer > 0.f)
+        {
+            ball.SetSpeedMultiplier(
+                SPEED_BONUS_MULTIPLIER
+            );
+        }
+        else if (fireballTimer > 0.f)
+        {
+            ball.SetSpeedMultiplier(
+                FIREBALL_SPEED_MULTIPLIER
+            );
+        }
+        else
+        {
+            ball.ResetSpeed();
+        }
 
         gameOver = lives <= 0;
         win = AllBricksDestroyed();
@@ -458,13 +516,29 @@ namespace Arkanoid
         file << memento.GetPlatformX() << ' '
             << memento.GetPlatformWidth() << '\n';
 
+        file << memento.GetFireballTimer() << ' '
+            << memento.GetShrinkTimer() << ' '
+            << memento.GetSpeedTimer() << '\n';
+
         const std::vector<bool>& destroyedBricks =
             memento.GetDestroyedBricks();
 
+        const std::vector<int>& brickHitPoints =
+            memento.GetBrickHitPoints();
+
         file << destroyedBricks.size() << '\n';
 
-        for (bool destroyed : destroyedBricks)
-            file << (destroyed ? 1 : 0) << ' ';
+        for (std::size_t i = 0;
+            i < destroyedBricks.size();
+            ++i)
+        {
+            file << (destroyedBricks[i] ? 1 : 0) << ' ';
+
+            if (i < brickHitPoints.size())
+                file << brickHitPoints[i] << ' ';
+            else
+                file << -1 << ' ';
+        }
 
         file << '\n';
 
@@ -488,6 +562,10 @@ namespace Arkanoid
         float savedPlatformX;
         float savedPlatformWidth;
 
+        float savedFireballTimer;
+        float savedShrinkTimer;
+        float savedSpeedTimer;
+
         std::size_t brickCount;
 
         if (!(file >> savedScore >> savedLives))
@@ -507,6 +585,14 @@ namespace Arkanoid
             return false;
         }
 
+        if (!(file >>
+            savedFireballTimer >>
+            savedShrinkTimer >>
+            savedSpeedTimer))
+        {
+            return false;
+        }
+
         if (!(file >> brickCount))
             return false;
 
@@ -515,16 +601,23 @@ namespace Arkanoid
             false
         );
 
+        std::vector<int> brickHitPoints(
+            brickCount,
+            -1
+        );
+
         for (std::size_t i = 0;
             i < brickCount;
             ++i)
         {
-            int value;
+            int destroyed;
+            int hitPoints;
 
-            if (!(file >> value))
+            if (!(file >> destroyed >> hitPoints))
                 return false;
 
-            destroyedBricks[i] = value != 0;
+            destroyedBricks[i] = destroyed != 0;
+            brickHitPoints[i] = hitPoints;
         }
 
         GameMemento memento(
@@ -533,7 +626,11 @@ namespace Arkanoid
             savedBallPosition,
             savedPlatformX,
             savedPlatformWidth,
-            destroyedBricks
+            savedFireballTimer,
+            savedShrinkTimer,
+            savedSpeedTimer,
+            destroyedBricks,
+            brickHitPoints
         );
 
         Load(memento);

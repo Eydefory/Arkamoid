@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-
 #include <vector>
 
 namespace Arkanoid
@@ -15,7 +14,11 @@ namespace Arkanoid
             const sf::Vector2f& ballPosition,
             float platformX,
             float platformWidth,
-            const std::vector<bool>& destroyedBricks
+            float fireballTimer,
+            float shrinkTimer,
+            float speedTimer,
+            const std::vector<bool>& destroyedBricks,
+            const std::vector<int>& brickHitPoints
         );
 
         int GetScore() const;
@@ -26,7 +29,12 @@ namespace Arkanoid
         float GetPlatformX() const;
         float GetPlatformWidth() const;
 
+        float GetFireballTimer() const;
+        float GetShrinkTimer() const;
+        float GetSpeedTimer() const;
+
         const std::vector<bool>& GetDestroyedBricks() const;
+        const std::vector<int>& GetBrickHitPoints() const;
 
     private:
         int score;
@@ -37,6 +45,11 @@ namespace Arkanoid
         float platformX;
         float platformWidth;
 
+        float fireballTimer;
+        float shrinkTimer;
+        float speedTimer;
+
         std::vector<bool> destroyedBricks;
+        std::vector<int> brickHitPoints;
     };
 }

@@ -13,6 +13,9 @@ namespace Arkanoid
 
         void Draw(sf::RenderWindow& window) const override;
 
+        int GetHitPoints() const;
+        void SetHitPoints(int value);
+
     protected:
         void OnHit() override;
 

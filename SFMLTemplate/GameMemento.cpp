@@ -8,14 +8,22 @@ namespace Arkanoid
         const sf::Vector2f& ballPositionValue,
         float platformXValue,
         float platformWidthValue,
-        const std::vector<bool>& destroyedBricksValue
+        float fireballTimerValue,
+        float shrinkTimerValue,
+        float speedTimerValue,
+        const std::vector<bool>& destroyedBricksValue,
+        const std::vector<int>& brickHitPointsValue
     )
         : score(scoreValue),
         lives(livesValue),
         ballPosition(ballPositionValue),
         platformX(platformXValue),
         platformWidth(platformWidthValue),
-        destroyedBricks(destroyedBricksValue)
+        fireballTimer(fireballTimerValue),
+        shrinkTimer(shrinkTimerValue),
+        speedTimer(speedTimerValue),
+        destroyedBricks(destroyedBricksValue),
+        brickHitPoints(brickHitPointsValue)
     {
     }
 
@@ -44,8 +52,28 @@ namespace Arkanoid
         return platformWidth;
     }
 
+    float GameMemento::GetFireballTimer() const
+    {
+        return fireballTimer;
+    }
+
+    float GameMemento::GetShrinkTimer() const
+    {
+        return shrinkTimer;
+    }
+
+    float GameMemento::GetSpeedTimer() const
+    {
+        return speedTimer;
+    }
+
     const std::vector<bool>& GameMemento::GetDestroyedBricks() const
     {
         return destroyedBricks;
+    }
+
+    const std::vector<int>& GameMemento::GetBrickHitPoints() const
+    {
+        return brickHitPoints;
     }
 }
